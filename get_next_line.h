@@ -6,7 +6,7 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 07:16:16 by vpetit            #+#    #+#             */
-/*   Updated: 2017/01/10 16:58:34 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/02/23 18:14:27 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ struct	s_get_next_line_list
 	int			content_size;
 	int			fd;
 	t_gnl_list	*next_fd;
+	t_gnl_list	*first_fd;
 
 };
 
