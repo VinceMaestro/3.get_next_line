@@ -11,6 +11,7 @@ SRC_LIB = ft_putnbr.c \
 			ft_memchr.c \
 			ft_memcpy.c \
 			ft_memset.c \
+			ft_putstr.c \
 			ft_putstr_fd.c
 
 DIR_LIB = ./libft
@@ -27,13 +28,13 @@ INCL = ./libft/libft.h \
 all: $(NAME)
 
 $(NAME) : $(SRC)
-			gcc $(CFLAGS) -c $(SRC) -g -I $(INCL)
-			gcc $(CFLAGS) $(OBJ) -o /tmp/forgnl/$(NAME)
+			@gcc $(CFLAGS) -c $(SRC) -g -I $(INCL)
+			@gcc $(CFLAGS) $(OBJ) -o /tmp/forgnl/$(NAME)
 
 clean:
-	/bin/rm -f $(OBJ)
+	@/bin/rm -f $(OBJ)
 
 fclean: clean
-	/bin/rm -f /tmp/forgnl/$(NAME)
+	@/bin/rm -f /tmp/forgnl/$(NAME)
 
 re: fclean all

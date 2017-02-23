@@ -6,14 +6,13 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 18:25:36 by vpetit            #+#    #+#             */
-/*   Updated: 2017/02/22 18:31:43 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/02/22 18:40:09 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <unistd.h>
 #include <fcntl.h>
-#include <stdio.h>
 
 static int	ft_display_file(char *argv)
 {
@@ -30,7 +29,9 @@ static int	ft_display_file(char *argv)
 	if (line)
 	{
 		ft_putnbr(get_next_line(open_fd, line));
-		printf("final line is : \n%s\n", *line);
+		ft_putstr("final line is : \n");
+		ft_putstr(*line);
+		ft_putstr("\n");
 	}
 	if (close(open_fd) == -1)
 	{
