@@ -6,7 +6,7 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 07:16:02 by vpetit            #+#    #+#             */
-/*   Updated: 2017/02/23 18:52:30 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/02/27 18:14:26 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,9 +172,10 @@ int			get_next_line(const int fd, char **line)
 	static t_gnl_list	*fd_lst;
 	t_gnl_list			*tmp;
 	char				*tmpline;
+	int					reader;
 
 	tmp = fd_lst;
-	if (!fd || !line || BUFF_SIZE < 1 || !(fd_list = ft_getlst_fd(fd_list, fd)))
+	if (!fd || !line || BUFF_SIZE < 1 || !(fd_lst = ft_getlst_fd(fd_lst, fd)))
 		return (-1);
 	((tmp != fd_lst) ? (ft_memdel(&tmp)) : (tmp));
 	tmpline = fd_lst.content;
@@ -182,15 +183,25 @@ int			get_next_line(const int fd, char **line)
 	{
 
 		((tmpline != fd_lst.content) ? (fd_lst.content_size = \
-			fd_lst.content - tmpline) : (fd_lst.content_size));
-		ft_memdel(&tmpline)
+			fd_lst.content_size - (fd_lst.content - tmpline)) : (fd_lst.content_size));
+		ft_memdel(&tmpline);
 		// lstline = ft_memincr(fd_lst.content, lstline - fd_lst.content);
-		ft_putstr(lstline);
-		return ()
+		ft_putstr(fd_lst.content);
+		return (1)
 	}
 	else
 	{
-		lstline = ft_memincr(fd_lst.content, fd_lst.content_size + BUFF_SIZE);
+		fd_lst.content = ft_memincr(tmpline, fd_lst.content_size + BUFF_SIZE);
+		ft_memdel(&tmpline);
+		while ((reader = read(fd_lst.fd, &(fd_lst.content), BUFF_SIZE)) !=
+		BUFF_SIZE && fd_lst.content = ft_memchr(fd_lst.content, '\n',
+		fd_lst.content_size))
+		{
+			ft_memdel(&tmpline);
+			fd_lst.content_size = fd_lst.content_size + BUFF_SIZE;
+			tmpline = fd_lst.content;
+			// fd_lst.content = ft_memincr(tmpline, fd_lst.content_size);
+		}
 	}
 
 
