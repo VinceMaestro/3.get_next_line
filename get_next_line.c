@@ -177,18 +177,20 @@ int			get_next_line(const int fd, char **line)
 	if (!fd || !line || BUFF_SIZE < 1 || !(fd_list = ft_getlst_fd(fd_list, fd)))
 		return (-1);
 	((tmp != fd_lst) ? (ft_memdel(&tmp)) : (tmp));
-	if (lstline = (ft_memchr(fd_lst.content, '\n', fd_lst.content_size)))
+	tmpline = fd_lst.content;
+	if (fd_lst.content = (ft_memchr(fd_lst.content, '\n', fd_lst.content_size)))
 	{
-		tmpline = lstline;
-		lstline = ft_memincrease(fd_lst.content, lstline - fd_lst.content);
-		ft_putstr(lstline);
-		((tmpline != lstline) ? (ft_memdel(&tmpline)) : (tmpline));
 
+		((tmpline != fd_lst.content) ? (fd_lst.content_size = \
+			fd_lst.content - tmpline) : (fd_lst.content_size));
+		ft_memdel(&tmpline)
+		// lstline = ft_memincr(fd_lst.content, lstline - fd_lst.content);
+		ft_putstr(lstline);
 		return ()
 	}
 	else
 	{
-		lstline = ft_memincrease(fd_lst.content, fd_lst.content_size + BUFF_SIZE);
+		lstline = ft_memincr(fd_lst.content, fd_lst.content_size + BUFF_SIZE);
 	}
 
 
