@@ -6,7 +6,7 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 07:16:02 by vpetit            #+#    #+#             */
-/*   Updated: 2017/02/27 18:14:26 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/03/02 18:29:47 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 // 	endl = NULL;
 // 	((!reader) ? (reader = (t_list*)ft_memalloc(t_list)));
 // 	((reader) ? (*reader = (t_list){(char*)ft_memalloc(BUFF_SIZE)), BUFF_SIZE, NULL});
-// 	if (!fd || !line || !BUFF_SIZE || !reader || !reader->content)
+// 	if (!fd || !line || !BUFF_SIZE || !reader || !reader->cont)
 // 		return (-1);
-// 	while (!(reader->content_size = ft_max((size_t)(ft_memchr(buff, '\n', BUFF_SIZE) - reader->content), 0)))
+// 	while (!(reader->cont_sze = ft_max((size_t)(ft_memchr(buff, '\n', BUFF_SIZE) - reader->cont), 0)))
 // 	{
 // 		read(fd, buff, BUFF_SIZE));
-// 		reader->content = ft_strjoin(reader->content, (buff, )[0]  ft_memchr(buff, '\n', BUFF_SIZE)))
+// 		reader->cont = ft_strjoin(reader->cont, (buff, )[0]  ft_memchr(buff, '\n', BUFF_SIZE)))
 // 	}
 // }
 //
@@ -62,11 +62,11 @@ static void	*ft_memincr(void *src, int new_size)
 // 	if (fd_lst)
 // 	{
 //  		printf("ptr define next s Trying to print : %i : fd_lst : %i\n", ptr->fd, fd_lst->fd);
-// 		// printf("ptr define next s : %p\n", ptr->next_fd);
-// 		while (ptr->next_fd && ptr->fd != fd)
+// 		// printf("ptr define next s : %p\n", ptr->next);
+// 		while (ptr->next && ptr->fd != fd)
 // 		{
 // 			printf("just one?\n");
-// 			ptr = ptr->next_fd;
+// 			ptr = ptr->next;
 // 			printf("sucess one\n");
 // 		}
 // 		printf("exiting while\n");
@@ -79,14 +79,14 @@ static void	*ft_memincr(void *src, int new_size)
 // 	{
 // 		printf("success malloc\n");
 // 		new->fd = fd;
-// 		new->content = NULL;
-// 		new->content_size = 0;
-// 		new->next_fd = NULL;
-// 		((ptr) ? (ptr->next_fd = new) :\
+// 		new->cont = NULL;
+// 		new->cont_sze = 0;
+// 		new->next = NULL;
+// 		((ptr) ? (ptr->next = new) :\
 // 			(ptr = new));
 // 		printf("exit ft_lstfd\n");
 // 	}
-// 	return ((ptr->next_fd) ? (ptr = ptr->next_fd) : (ptr));
+// 	return ((ptr->next) ? (ptr = ptr->next) : (ptr));
 // }
 //
 // static void	ft_init_gnl(t_gnl_list *fd_lst, int fd, t_gnl *s)
@@ -96,9 +96,9 @@ static void	*ft_memincr(void *src, int new_size)
 // 	printf("2\n");
 // 	s->ptr_lst = ft_lstfd(fd_lst, fd);
 // 	printf("3\n");
-// 	s->str = s->ptr_lst->content;
+// 	s->str = s->ptr_lst->cont;
 // 	printf("4\n");
-// 	s->len_str = &(s->ptr_lst->content_size);
+// 	s->len_str = &(s->ptr_lst->cont_sze);
 // 	printf("5\n");
 // 	s->end = ft_memchr(s->str, '\n', *(s->len_str));
 // 	printf("6 : %p\n", s->end);
@@ -167,46 +167,78 @@ static void	*ft_memincr(void *src, int new_size)
 //
 // //sanitizer adress
 
-int			get_next_line(const int fd, char **line)
+static t_gnl_list	*ft_getlst_fd(t_gnl_list *fd_lst, int fd)
+{
+	if (fd_lst)
+	{
+		while (fd_lst->next && fd_lst->fd != fd)
+			fd_lst = fd_lst->next;
+		if (fd_lst->fd == fd)
+			return (fd_lst);
+		fd_lst->next = (fd_lst*)malloc(sizeof(fd_lst));
+		if (!fd_lst->next)
+			return (NULL);
+		fd_lst->next->first = fd_lst->first;
+		fd_lst = fd_lst->next;
+	}
+	else
+	{
+		fd_lst = (fd_lst*)malloc(sizeof(fd_lst));
+		if (!fd_lst)
+			return (NULL);
+		fd_lst->first = fd_lst;
+	}
+	fd_lst->fd = fd;
+	fd_lst->cont = '\0';
+	fd_lst->cont_sze = 0;
+	return (fd_lst);
+}
+
+int					get_next_line(const int fd, char **line)
 {
 	static t_gnl_list	*fd_lst;
 	t_gnl_list			*tmp;
 	char				*tmpline;
 	int					reader;
 
-	tmp = fd_lst;
 	if (!fd || !line || BUFF_SIZE < 1 || !(fd_lst = ft_getlst_fd(fd_lst, fd)))
 		return (-1);
-	((tmp != fd_lst) ? (ft_memdel(&tmp)) : (tmp));
-	tmpline = fd_lst.content;
-	if (fd_lst.content = (ft_memchr(fd_lst.content, '\n', fd_lst.content_size)))
+	tmpline = fd_lst->cont;
+	// If \n found in cont print
+	if (fd_lst->cont = (ft_memchr(fd_lst->cont, '\n', fd_lst.cont_sze)))
 	{
+		// fd_lst = ft_print_from_fd(fd_lst, tmpline);
+		// ft_memdel(&tmpline);
+		// return (1);
 
-		((tmpline != fd_lst.content) ? (fd_lst.content_size = \
-			fd_lst.content_size - (fd_lst.content - tmpline)) : (fd_lst.content_size));
+		if (tmpline != fd_lst->cont)
+			fd_lst.cont_sze -= (*fd_lst->cont - tmpline);
+		*fd_lst->cont = 0;
+		ft_putstr(tmpline - (tmpline - fd_lst->cont));
 		ft_memdel(&tmpline);
-		// lstline = ft_memincr(fd_lst.content, lstline - fd_lst.content);
-		ft_putstr(fd_lst.content);
-		return (1)
+		fd_lst = fd_lst->first;
+		return (1);
 	}
 	else
 	{
-		fd_lst.content = ft_memincr(tmpline, fd_lst.content_size + BUFF_SIZE);
+		// Increase cont_sze, read BUFF_SIZE and write in cont
+		fd_lst->cont = ft_memincr(tmpline, fd_lst.cont_sze + BUFF_SIZE);
 		ft_memdel(&tmpline);
-		while ((reader = read(fd_lst.fd, &(fd_lst.content), BUFF_SIZE)) !=
-		BUFF_SIZE && fd_lst.content = ft_memchr(fd_lst.content, '\n',
-		fd_lst.content_size))
+		while (((reader = read(fd_lst.fd, &(*fd_lst->cont + fd_lst.cont_sze), \
+				BUFF_SIZE)) == BUFF_SIZE) && !(fd_lst->cont = \
+				ft_memchr(&(*fd_lst->cont + fd_lst.cont_sze), '\n', BUFF_SIZE)))
 		{
+			// if reader == BUFF_SIZE et pas de \n on Increase content
+			fd_lst.cont_sze += BUFF_SIZE;
+			tmpline = fd_lst->cont;
+			fd_lst->cont = ft_memincr(tmpline, fd_lst.cont_sze + BUFF_SIZE);
 			ft_memdel(&tmpline);
-			fd_lst.content_size = fd_lst.content_size + BUFF_SIZE;
-			tmpline = fd_lst.content;
-			// fd_lst.content = ft_memincr(tmpline, fd_lst.content_size);
 		}
+		tmpline = fd_lst->cont;
+		((fd_lst->cont = ft_memchr(&(*fd_lst->cont + fd_lst.cont_sze), '\n', \
+			BUFF_SIZE)) ? (ft_putstr(&(*tmpline - (fd_lst->cont - tmpline))) : \
+			() )
 	}
-
-
-		? () : () )
-
 
 
 }
