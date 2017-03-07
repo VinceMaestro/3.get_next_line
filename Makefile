@@ -30,12 +30,13 @@ all: $(NAME)
 
 $(NAME) : $(SRC)
 			@gcc $(CFLAGS) -c $(SRC) -g -I $(INCL)
-			@gcc $(CFLAGS) $(OBJ) -o /tmp/forgnl/$(NAME)
+			@gcc $(CFLAGS) $(OBJ) -o $(NAME)
+			@/bin/rm -f get_next_line.h.gch
 
 clean:
 	@/bin/rm -f $(OBJ)
 
 fclean: clean
-	@/bin/rm -f /tmp/forgnl/$(NAME)
+	@/bin/rm -f $(NAME)
 
 re: fclean all
