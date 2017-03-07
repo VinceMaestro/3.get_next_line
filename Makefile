@@ -13,7 +13,8 @@ SRC_LIB = ft_bzero.c \
 			ft_strnew.c \
 			ft_putstr_fd.c \
 			ft_putnbr.c \
-			ft_putchar.c
+			ft_putchar.c \
+			ft_strdel.c
 
 DIR_LIB = ./libft
 

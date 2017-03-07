@@ -6,7 +6,7 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 07:16:02 by vpetit            #+#    #+#             */
-/*   Updated: 2017/03/07 02:02:23 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/03/07 06:56:23 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int					get_next_line(const int fd, char **line)
 	char				*str;
 
 	ret = 0;
-	if (!fd || !line)
+	if (!fd || !line || fd < 1)
 		ret = -1;
 	if (!ret)
 	{
