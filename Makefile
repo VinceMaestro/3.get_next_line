@@ -5,14 +5,15 @@ CFLAGS = -Wall -Werror -Wextra
 SRC_GNL = main_get_next_line.c \
 			get_next_line.c
 
-SRC_LIB = ft_putnbr.c \
-			ft_bzero.c \
-			ft_memalloc.c \
-			ft_memchr.c \
-			ft_memcpy.c \
-			ft_memset.c \
+SRC_LIB = ft_bzero.c \
+			ft_strchr.c \
 			ft_putstr.c \
-			ft_putstr_fd.c
+			ft_min.c \
+			ft_strncpy.c \
+			ft_strnew.c \
+			ft_putstr_fd.c \
+			ft_putnbr.c \
+			ft_putchar.c
 
 DIR_LIB = ./libft
 

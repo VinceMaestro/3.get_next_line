@@ -6,7 +6,7 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 18:25:36 by vpetit            #+#    #+#             */
-/*   Updated: 2017/02/22 18:40:09 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/03/07 01:41:37 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ static int	ft_display_file(char *argv)
 	line = (char**)malloc(sizeof(char*));
 	if (line)
 	{
-		ft_putnbr(get_next_line(open_fd, line));
-		ft_putstr("final line is : \n");
-		ft_putstr(*line);
-		ft_putstr("\n");
+		while (get_next_line(open_fd, line) == 1)
+		{
+			// ft_putstr("Line :\n");
+			ft_putstr(*line);
+			ft_putstr("\n");
+		}
 	}
 	if (close(open_fd) == -1)
 	{

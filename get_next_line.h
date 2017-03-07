@@ -6,7 +6,7 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 07:16:16 by vpetit            #+#    #+#             */
-/*   Updated: 2017/03/02 16:17:58 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/03/07 00:37:19 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,18 @@
 # include <unistd.h>
 
 typedef struct s_get_next_line_list	t_gnl_list;
-typedef struct s_struct_gnl			t_gnl;
 
 struct	s_get_next_line_list
 {
-	void		*cont;
+	char		*cont;
 	int			cont_sze;
+	int			offset;
+	int			pos;
 	int			fd;
+	int			ret;
 	t_gnl_list	*next;
 	t_gnl_list	*first;
 
-};
-
-struct	s_struct_gnl
-{
-	char				*str;
-	char				*end;
-	int					reader;
-	t_gnl_list			*ptr_lst;
-	int					*len_str;
 };
 
 # ifndef BUFF_SIZE
