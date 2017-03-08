@@ -6,7 +6,7 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 07:16:16 by vpetit            #+#    #+#             */
-/*   Updated: 2017/03/07 02:42:54 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/03/08 19:11:07 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ struct	s_get_next_line_list
 };
 
 # ifndef BUFF_SIZE
-#  define BUFF_SIZE 30
+#  define BUFF_SIZE 8
 # endif
 
 int		get_next_line(const int fd, char **line);

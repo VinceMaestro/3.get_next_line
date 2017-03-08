@@ -6,7 +6,7 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 07:16:02 by vpetit            #+#    #+#             */
-/*   Updated: 2017/03/07 06:56:23 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/03/08 19:33:38 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ static t_gnl_list	*ft_read_next(t_gnl_list *fd_lst)
 	new = ft_strnew(rl_size + BUFF_SIZE + 1);
 	ft_bzero(new, rl_size + BUFF_SIZE + 1);
 	new = ft_strncpy(new, &fd_lst->cont[fd_lst->offset], rl_size);
-	if ((reader = read(fd_lst->fd, &new[rl_size], BUFF_SIZE)) != BUFF_SIZE)
+	if ((reader = read(fd_lst->fd, &new[rl_size], BUFF_SIZE)) == 0)
 		fd_lst->pos = rl_size + reader;
+	else if (reader == -1)
+		fd_lst->ret = 1;
 	fd_lst->cont = new;
 	fd_lst->cont_sze = rl_size + ft_min(reader, BUFF_SIZE);
 	fd_lst->offset = 0;
