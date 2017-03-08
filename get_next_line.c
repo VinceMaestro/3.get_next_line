@@ -22,7 +22,7 @@ static t_gnl_list	*ft_read_next(t_gnl_list *fd_lst)
 	new = ft_strnew(rl_size + BUFF_SIZE + 1);
 	ft_bzero(new, rl_size + BUFF_SIZE + 1);
 	new = ft_strncpy(new, &fd_lst->cont[fd_lst->offset], rl_size);
-	if ((reader = read(fd_lst->fd, &new[rl_size], BUFF_SIZE)) != BUFF_SIZE)
+	if ((reader = read(fd_lst->fd, &new[rl_size], BUFF_SIZE)) == 0)
 		fd_lst->pos = rl_size + reader;
 	fd_lst->cont = new;
 	fd_lst->cont_sze = rl_size + ft_min(reader, BUFF_SIZE);
