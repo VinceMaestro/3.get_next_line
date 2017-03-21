@@ -6,7 +6,7 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 18:25:36 by vpetit            #+#    #+#             */
-/*   Updated: 2017/03/08 20:06:56 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/03/21 17:05:24 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,11 @@ static int	ft_display_file(char *argv, int end)
 		// ft_putstr(line);
 		// ft_putstr("\n");
 	// }
-	if (close(open_fd) == -1)
-	{
-		ft_putstr_fd("close file () failed \n", 2);
-		return (-1);
-	}
+	// if (close(open_fd) == -1)
+	// {
+	// 	ft_putstr_fd("close file () failed \n", 2);
+	// 	return (-1);
+	// }
 	if (end < 0)
 		return (ft_display_file(argv, end + 1));
 	return (0);
