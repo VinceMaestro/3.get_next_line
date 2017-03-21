@@ -6,7 +6,7 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 07:16:02 by vpetit            #+#    #+#             */
-/*   Updated: 2017/03/21 19:41:16 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/03/21 21:33:53 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,10 @@ static t_gnl_list	*ft_read_next(t_gnl_list *fd_lst)
 		fd_lst->pos = rl_size + reader;
 	else if (reader == -1)
 		fd_lst->ret = 1;
-	else if (reader != BUFF_SIZE)
-	{
-		fd_lst->ret = 6;
-		fd_lst->pos = rl_size + reader;
-	}
 	fd_lst->cont = new;
 	fd_lst->cont_sze = rl_size + ft_min(reader, BUFF_SIZE);
+	// ft_putnbr(fd_lst->cont_sze);
+	// ft_putchar('\n');
 	fd_lst->offset = 0;
 	return (fd_lst);
 }
@@ -43,10 +40,15 @@ static t_gnl_list	*ft_getstr_pos(t_gnl_list *fd_lst)
 
 	fd_lst->ret = 0;
 	fd_lst->pos = -1;
-	while (!fd_lst->ret || ret == 6)
+	while (!fd_lst->ret)
 	{
 		if (fd_lst->pos != -1)
-			fd_lst->ret = 2;
+		{
+			if (fd_lst->cont_sze)
+				fd_lst->ret = 3;
+			else
+				fd_lst->ret = 2;
+		}
 		if ((rest = ft_strchr(&fd_lst->cont[fd_lst->offset], '\n')))
 		{
 			fd_lst->pos = (rest - fd_lst->cont);
@@ -56,8 +58,6 @@ static t_gnl_list	*ft_getstr_pos(t_gnl_list *fd_lst)
 		else if (!fd_lst->ret)
 			fd_lst = ft_read_next(fd_lst);
 	}
-	if (fd_lst->ret == 6)
-		fd_lst->ret = 6;
 	return (fd_lst);
 }
 
