@@ -6,7 +6,7 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 07:16:02 by vpetit            #+#    #+#             */
-/*   Updated: 2017/03/21 21:33:53 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/03/22 23:14:18 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,16 @@ static t_gnl_list	*ft_read_next(t_gnl_list *fd_lst)
 	ft_bzero(new, rl_size + BUFF_SIZE + 1);
 	new = ft_strncpy(new, &fd_lst->cont[fd_lst->offset], rl_size);
 	if ((reader = read(fd_lst->fd, &new[rl_size], BUFF_SIZE)) == 0)
+	{
 		fd_lst->pos = rl_size + reader;
+		fd_lst->ret = 2;
+	}
 	else if (reader == -1)
 		fd_lst->ret = 1;
+	else if (reader != BUFF_SIZE)
+		fd_lst->pos = rl_size + reader;
 	fd_lst->cont = new;
 	fd_lst->cont_sze = rl_size + ft_min(reader, BUFF_SIZE);
-	// ft_putnbr(fd_lst->cont_sze);
-	// ft_putchar('\n');
 	fd_lst->offset = 0;
 	return (fd_lst);
 }
@@ -42,16 +45,11 @@ static t_gnl_list	*ft_getstr_pos(t_gnl_list *fd_lst)
 	fd_lst->pos = -1;
 	while (!fd_lst->ret)
 	{
-		if (fd_lst->pos != -1)
+		if ((rest = ft_strchr(&fd_lst->cont[fd_lst->offset], '\n')) || \
+			fd_lst->pos != -1)
 		{
-			if (fd_lst->cont_sze)
-				fd_lst->ret = 3;
-			else
-				fd_lst->ret = 2;
-		}
-		if ((rest = ft_strchr(&fd_lst->cont[fd_lst->offset], '\n')))
-		{
-			fd_lst->pos = (rest - fd_lst->cont);
+			if (rest)
+				fd_lst->pos = (rest - fd_lst->cont);
 			fd_lst->cont[fd_lst->pos] = 0;
 			fd_lst->ret = 3;
 		}
@@ -107,7 +105,7 @@ int					get_next_line(const int fd, char **line)
 	char				*str;
 
 	ret = 0;
-	if (!fd || !line || fd < 1)
+	if (fd < 0 || !line || fd < 1)
 		ret = -1;
 	if (!ret)
 	{
@@ -117,7 +115,7 @@ int					get_next_line(const int fd, char **line)
 		*line = str;
 		fd_lst->offset = fd_lst->pos + 1;
 		ret = fd_lst->ret - 2;
-		if (ret == 0)
+		if (ret == 0 && fd_lst->offset)
 			fd_lst->offset--;
 	}
 	return (ret);
