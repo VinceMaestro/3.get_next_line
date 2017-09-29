@@ -6,7 +6,7 @@
 /*   By: vpetit <vpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 07:16:02 by vpetit            #+#    #+#             */
-/*   Updated: 2017/03/27 18:04:13 by vpetit           ###   ########.fr       */
+/*   Updated: 2017/09/29 18:35:08 by vpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int					get_next_line(const int fd, char **line)
 	{
 		fd_lst = ft_get_lst_fd(fd_lst, fd);
 		fd_lst = ft_getstr_pos(fd_lst);
-		str = &fd_lst->cont[fd_lst->offset];
+		str = ft_strdup(&fd_lst->cont[fd_lst->offset]);
 		*line = str;
 		fd_lst->offset = fd_lst->pos + 1;
 		ret = fd_lst->ret - 2;
