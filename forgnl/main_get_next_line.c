@@ -40,7 +40,7 @@ static int	ft_display_file(char *argv)
 
 	while ((ret = get_next_line(open_fd, &line)) == 1)
 	{
-		ft_putend(line);
+		ft_putendl(line);
 		free(line);
 		// ft_putnbr(ret);
 		cpt++;
